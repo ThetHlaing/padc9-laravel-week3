@@ -11,15 +11,23 @@
 <body>
 
     <h1>Create new product review</h1>
-    
-    <form action="/product_review/store/" method="post">
+
+    @if($errors->any())
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    @endif
+
+    <form action="{{route('product_review.store')}}" method="post">
         @csrf
 
         <label for="product_name">Product Name</label>
         <input type="text" id="product_name" name="product_name">
         <br />
 
-        <label for="exampleInputEmail1">Review Detail</label>
+        <label for="review">Review Detail</label>
         <input type="text" id="review" name="review">
         <br />
 

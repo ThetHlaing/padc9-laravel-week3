@@ -18,7 +18,7 @@
     <h1>
         Review For : {{$review->product_name}}
     </h1>
-
+    
     <span>votes : {{$review->votes }}</span>
     <a href="/product_review/{{$review->id}}/edit/">Edit the review</a>
 

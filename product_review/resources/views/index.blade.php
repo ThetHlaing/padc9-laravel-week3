@@ -14,7 +14,9 @@
 
     @foreach($reviews as $review)
     <h1>
-        <a href="product_review/{{$review->id}}">Review For : {{$review->product_name}}</a>
+        <a href="/product_review/{{$review->id}}">
+            Review For : {{$review->product_name}}
+        </a>
     </h1>
     <p>{{$review->review}}</p>
     @endforeach

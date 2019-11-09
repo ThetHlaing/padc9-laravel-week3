@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReview;
+use App\ProductReview;
 use Illuminate\Http\Request;
 
 class ProductReviewController extends Controller
 {
     public function index()
     {
-        $reviews = \DB::table('product_reviews')->get();
+        $reviews = ProductReview::get();
+        //$reviews = \DB::table('product_reviews')->get();
         return view('index', compact('reviews'));
     }
 
@@ -18,56 +20,65 @@ class ProductReviewController extends Controller
         return view('create');
     }
 
-    public function show($id)
+    public function show(ProductReview $review)
     {
-        $review = \DB::table('product_reviews')->where('id', $id)->first();
+        //dd($review);
+        //$review = ProductReview::find($id);
+        //$review = \DB::table('product_reviews')->where('id', $id)->first();
 
-        if (!$review) {
-            abort(404);
-        }
+        // if (!$review) {
+        //     abort(404);
+        // }
         return view('detail', compact('review'));
     }
 
     public function store(StoreReview $request)
     {
+
+        // $review = new ProductReview();
+        // $review->product_name = $request->product_name;
+        // $review->review = $request->review;
+        // $review->save();
+
         $request_data = $request->all();
         unset($request_data['_token']);
 
-        $result = \DB::table('product_reviews')->insert($request_data);
+        $result =  ProductReview::create($request_data);
+        //$result = \DB::table('product_reviews')->insert($request_data);
 
         if ($result) {
-            return redirect('/home');
+            return redirect()->route('product_review.home');
         }
     }
-    public function edit($id)
+    public function edit(ProductReview $review)
     {
-        $review  = \DB::table('product_reviews')->where('id', '=', $id)->first();
+        //$review  = \DB::table('product_reviews')->where('id', '=', $id)->first();
 
         return view('edit', compact('review'));
     }
 
-    public function update(StoreReview $request, $id)
+    public function update(StoreReview $request, ProductReview $review)
     {
         $request_product = $request->all();
         unset($request_product['_token']);
 
-        $result = \DB::table('product_reviews')->where('id', $id)->update($request_product);
+        $result = $review->update($request_product);
 
         if ($result) {
-            return redirect('/product_review/' . $id);
+            return redirect()->route('product_review.show', ['id' => $review->id]);
         }
     }
-    public function upvote($id)
+    public function upvote(ProductReview $review)
     {
-        \DB::table('product_reviews')->where('id',  $id)->increment('votes');
+        $review->increment('votes');
 
-        return redirect('/product_review/' . $id);
+        return redirect()->back();
     }
 
-    public function downvote($id)
+    public function downvote(ProductReview $review)
     {
-        \DB::table('product_reviews')->where('id',  $id)->decrement('votes');
+        $review->decrement('votes');
 
-        return redirect('/product_review/' . $id);
+        return redirect()->back();
     }
 }

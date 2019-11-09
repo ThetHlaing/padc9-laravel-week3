@@ -17,14 +17,16 @@ Route::get('/', function () {
 
 
 
-Route::get('/home', 'ProductReviewController@index');
+Route::name('product_review.')->prefix('product_review')->group(function () {
+    Route::get('/all', 'ProductReviewController@index')->name('home');
 
-Route::get('/product_review/create', 'ProductReviewController@create');
-Route::post('/product_review/store', 'ProductReviewController@store');
+    Route::get('/create', 'ProductReviewController@create')->name('create');
+    Route::post('/store', 'ProductReviewController@store')->name('store');
 
-Route::get('/product_review/{id}/edit', 'ProductReviewController@edit');
-Route::post('/product_review/{id}/update', 'ProductReviewController@update');
+    Route::get('/{review}/edit', 'ProductReviewController@edit')->name('edit');
+    Route::post('/{review}/update', 'ProductReviewController@update')->name('update');
 
-Route::post('/product_review/{id}/upvote', 'ProductReviewController@upvote');
-Route::post('/product_review/{id}/downvote', 'ProductReviewController@downvote');
-Route::get('/product_review/{id}', 'ProductReviewController@show');
+    Route::post('/{review}/upvote', 'ProductReviewController@upvote')->name('upvote');
+    Route::post('/{review}/downvote', 'ProductReviewController@downvote')->name('downvote');
+    Route::get('/{review}', 'ProductReviewController@show')->name('show');
+});
