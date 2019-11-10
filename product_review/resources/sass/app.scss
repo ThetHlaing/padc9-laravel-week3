@@ -1,1 +1,19 @@
 //
+$primaryColor : #a1a1a1;
+$secondaryColor : green;
+$secondaryFontSize : 18px;
+
+body {
+    background-color: $primaryColor;
+    font-size: 18px;
+}
+
+h1 {
+    color: $secondaryColor;
+    font-size: $secondaryFontSize;
+}
+
+h2 {
+    background-color: $primaryColor;
+    font-size: $secondaryFontSize;
+}

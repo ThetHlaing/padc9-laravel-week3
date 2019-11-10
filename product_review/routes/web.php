@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 
+Route::name('product.')->prefix('product')->group(function () {
+    Route::get('/all', 'ProductController@index')->name('index');
+});
 
 Route::name('product_review.')->prefix('product_review')->group(function () {
     Route::get('/all', 'ProductReviewController@index')->name('home');
